@@ -12,14 +12,11 @@ export function LoginScreen() {
   return (
     <View style={styles.container}>
       
-      {/* Logo */}
       <Image source={require("../assets/images/logo.png")} style={styles.logo} />
 
-      {/* Campos de entrada */}
       <TextInput style={styles.input} placeholder="Email" keyboardType="email-address" />
       <TextInput style={styles.input} placeholder="Senha" secureTextEntry />
 
-      {/* Login e Cadastrar */}
       <View style={styles.buttonContainer}>
         <Button title="Login" color="#40a829" onPress={() => navigation.navigate("Menu")} />
       </View>

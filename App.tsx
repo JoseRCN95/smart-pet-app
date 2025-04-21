@@ -6,6 +6,8 @@ import SignUpScreen from "./src/screens/signup_screen";
 import MenuScreen from "./src/screens/menu_screen";
 import LocationScreen from './src/screens/location_screen';
 import HealthScreen from './src/screens/health_screen';
+import StepsScreen from "./src/screens/steps_screen";
+import AlarmScreen from './src/screens/alarm_screen'; 
 
 export type StackParamList = {
   Login: undefined;
@@ -13,6 +15,8 @@ export type StackParamList = {
   Menu: undefined;
   Location: undefined;
   Health: undefined;
+  Steps: undefined;
+  Alarm: undefined;
 };
 
 const Stack = createStackNavigator<StackParamList>();
@@ -26,6 +30,8 @@ export default function App() {
         <Stack.Screen name="Menu" component={MenuScreen} />
         <Stack.Screen name="Location" component={LocationScreen} />
         <Stack.Screen name="Health" component={HealthScreen} />
+        <Stack.Screen name="Steps" component={StepsScreen} />
+        <Stack.Screen name="Alarm" component={AlarmScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -5,7 +5,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useNavigation } from "@react-navigation/native";
 
-// Definição do esquema de validação
 const schema = yup.object().shape({
   nome: yup.string().required("Nome obrigatório"),
   email: yup.string().email("E-mail inválido").required("E-mail obrigatório"),
@@ -18,7 +17,6 @@ const schema = yup.object().shape({
 export default function SignUpScreen() {
   const navigation = useNavigation();
 
-  // Configuração do react-hook-form
   const {
     control,
     handleSubmit,
@@ -27,7 +25,6 @@ export default function SignUpScreen() {
     resolver: yupResolver(schema),
   });
 
-  // Função para processar o envio
   const onSubmit = (data: any) => {
     Alert.alert("Conta Criada!", `Bem-vindo, ${data.nome}!`);
   };
@@ -35,12 +32,10 @@ export default function SignUpScreen() {
   return (
     <View style={styles.container}>
       
-      {/* Logo */}
       <Image source={require("../assets/images/logo.png")} style={styles.logo} />
       
       <Text style={styles.title}>Criar Conta</Text>
 
-      {/* Nome */}
       <Controller
         control={control}
         name="nome"
@@ -52,7 +47,6 @@ export default function SignUpScreen() {
         )}
       />
 
-      {/* E-mail */}
       <Controller
         control={control}
         name="email"
@@ -64,7 +58,6 @@ export default function SignUpScreen() {
         )}
       />
 
-      {/* Senha */}
       <Controller
         control={control}
         name="senha"
@@ -76,7 +69,6 @@ export default function SignUpScreen() {
         )}
       />
 
-      {/* Confirmar Senha */}
       <Controller
         control={control}
         name="confirmarSenha"
@@ -88,7 +80,6 @@ export default function SignUpScreen() {
         )}
       />
 
-      {/* CPF */}
       <Controller
         control={control}
         name="cpf"
@@ -100,7 +91,6 @@ export default function SignUpScreen() {
         )}
       />
 
-      {/* Código PetSmart */}
       <Controller
         control={control}
         name="codigoPetSmart"
@@ -112,12 +102,10 @@ export default function SignUpScreen() {
         )}
       />
 
-      {/* Botão Criar Conta */}
       <TouchableOpacity style={styles.button} onPress={handleSubmit(onSubmit)}>
         <Text style={styles.buttonText}>Criar Conta</Text>
       </TouchableOpacity>
 
-      {/* Botão Voltar */}
       <TouchableOpacity style={[styles.button, styles.backButton]} onPress={() => navigation.goBack()}>
         <Text style={styles.buttonText}>Voltar para Login</Text>
       </TouchableOpacity>
@@ -125,7 +113,6 @@ export default function SignUpScreen() {
   );
 }
 
-// Estilos
 const styles = StyleSheet.create({
   container: {
     flex: 1,

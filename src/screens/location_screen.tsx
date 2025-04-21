@@ -1,5 +1,7 @@
-import React from "react";
-import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
+import React, { useEffect, useState } from "react";
+import { View, Text, Image, TouchableOpacity, StyleSheet, Alert } from "react-native";
+import MapView, { Marker } from "react-native-maps";
+import * as Location from "expo-location";
 import { useNavigation } from "@react-navigation/native";
 import type { StackParamList } from "../../App";
 import type { StackNavigationProp } from "@react-navigation/stack";
@@ -8,17 +10,58 @@ type LocationScreenNavigationProp = StackNavigationProp<StackParamList, "Locatio
 
 export function LocationScreen() {
   const navigation = useNavigation<LocationScreenNavigationProp>();
+  const [location, setLocation] = useState<Location.LocationObject | null>(null);
+
+  useEffect(() => {
+    (async () => {
+      const { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        Alert.alert("Permissão negada", "Permita o acesso à localização para usar o mapa.");
+        return;
+      }
+
+      const loc = await Location.getCurrentPositionAsync({});
+      setLocation(loc);
+    })();
+  }, []);
+
+  const handleAtualizar = async () => {
+    const loc = await Location.getCurrentPositionAsync({});
+    setLocation(loc);
+  };
 
   return (
     <View style={styles.container}>
-      {/* Logo */}
       <Image source={require("../assets/images/logo.png")} style={styles.logo} />
 
-      {/* Imagem do mapa*/}
-      <Image source={require("../assets/images/mapa.png")} style={styles.mapImage} />
+      <View style={styles.mapContainer}>
+        <MapView
+          style={styles.map}
+          region={
+            location
+              ? {
+                  latitude: location.coords.latitude,
+                  longitude: location.coords.longitude,
+                  latitudeDelta: 0.01,
+                  longitudeDelta: 0.01,
+                }
+              : undefined
+          }
+          showsUserLocation={true}
+        >
+          {location && (
+            <Marker
+              coordinate={{
+                latitude: location.coords.latitude,
+                longitude: location.coords.longitude,
+              }}
+              title="Você está aqui"
+            />
+          )}
+        </MapView>
+      </View>
 
-      {/* Botões */}
-      <TouchableOpacity style={styles.button} onPress={() => {}}>
+      <TouchableOpacity style={styles.button} onPress={handleAtualizar}>
         <Text style={styles.buttonText}>Atualizar</Text>
       </TouchableOpacity>
 
@@ -42,14 +85,18 @@ const styles = StyleSheet.create({
     height: 75,
     marginBottom: 15,
   },
-  mapImage: {
+  mapContainer: {
     width: "100%",
-    height: "66%",
-    resizeMode: "contain",
-    borderWidth: 2,   
-    borderColor: "grey", 
-    borderRadius: 2,
+    height: "60%",
+    borderWidth: 1,
+    borderColor: "#000",
+    borderRadius: 10,
+    overflow: "hidden",
     marginBottom: 20,
+  },
+  map: {
+    width: "100%",
+    height: "100%",
   },
   button: {
     width: "80%",

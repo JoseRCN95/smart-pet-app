@@ -9,10 +9,10 @@ type HealthNavigationProp = StackNavigationProp<StackParamList, "Health">;
 export function HealthScreen() {
   const navigation = useNavigation<HealthNavigationProp>();
 
-  // Estado do batimento cardíaco
+  
   const [heartRate, setHeartRate] = useState<number>(85);
 
-  // Atualiza o batimento cardíaco a cada 5 segundos
+  
   useEffect(() => {
     const interval = setInterval(() => {
       const newHeartRate = Math.floor(Math.random() * (90 - 80 + 1)) + 80; // Gera um valor entre 80 e 90
@@ -22,21 +22,21 @@ export function HealthScreen() {
     return () => clearInterval(interval); // Limpa o intervalo quando o componente for desmontado
   }, []);
 
-  // exibição das listas
+  
   const [showVaccines, setShowVaccines] = useState(false);
   const [showAppointments, setShowAppointments] = useState(false);
   const [showMedications, setShowMedications] = useState(false);
 
   return (
     <View style={styles.container}>
-      {/* Logo*/}
+      
       <Image source={require("../assets/images/logo.png")} style={styles.logo} />
 
-       {/* Seção do Batimento Cardíaco */}
+       
       <Text style={styles.heartRateText}>{heartRate} BPM</Text>
       <Image source={require("../assets/images/heartbeat.png")} style={styles.heartImage} />
 
-      {/* Botão de Vacinas */}
+      
       <TouchableOpacity style={styles.button} onPress={() => setShowVaccines(!showVaccines)}>
         <Text style={styles.buttonText}>Vacinas</Text>
       </TouchableOpacity>
@@ -47,7 +47,6 @@ export function HealthScreen() {
         </View>
       )}
 
-      {/* Botão de Consultas */}
       <TouchableOpacity style={styles.button} onPress={() => setShowAppointments(!showAppointments)}>
         <Text style={styles.buttonText}>Consultas</Text>
       </TouchableOpacity>
@@ -58,7 +57,6 @@ export function HealthScreen() {
         </View>
       )}
 
-      {/* Botão de Medicamentos */}
       <TouchableOpacity style={styles.button} onPress={() => setShowMedications(!showMedications)}>
         <Text style={styles.buttonText}>Medicamentos</Text>
       </TouchableOpacity>
@@ -68,7 +66,6 @@ export function HealthScreen() {
           <Text style={styles.listItem}>Anti-pulgas - 15/09/2023</Text>
         </View>
       )}
-      {/* Voltar */}
       <TouchableOpacity style={[styles.button, styles.backButton]} onPress={() => navigation.goBack()}>
               <Text style={styles.buttonText}>Voltar</Text>
             </TouchableOpacity>
